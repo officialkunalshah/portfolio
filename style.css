@@ -1,29 +1,60 @@
-/* ============================
-   1. FONTS
-   ============================ */
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@300;400;500;600&display=swap');
+/* ============================================================
+   Kunal Shah — portfolio styles
+   Fonts are loaded in index.html <head> (Fraunces + Hanken Grotesk)
+   ============================================================ */
 
 /* ============================
-   2. DESIGN SYSTEM (CSS VARIABLES)
+   1. DESIGN TOKENS
+   One place to change colours, type sizes and spacing.
    ============================ */
 :root {
-  --color-bg: #0B0C0E;
-  --color-text: #F3F1EC;
-  --color-text-muted: #8A8D91;
-  --color-accent: #C08552;
-  --color-border: #232427;
+  /* --- Colour (dark charcoal / off-white / copper) --- */
+  --color-bg:          #0B0C0E;
+  --color-bg-raised:   #131417;
+  --color-text:        #F3F1EC;
+  --color-text-muted:  #8A8D91;
+  --color-accent:      #C08552;
+  --color-accent-soft: #D49A66;
+  --color-border:      #232427;
+  --color-border-soft: #2E2F33;
 
-  --font-serif: 'Fraunces', serif;
-  --font-sans: 'Inter', sans-serif;
+  /* --- Type families --- */
+  --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-sans:    'Hanken Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
-  --container-width: 1200px;
-  --section-padding: 120px 24px;
+  /* --- Fluid type scale (min size .. max size) --- */
+  --step-sm:  clamp(0.80rem, 0.78rem + 0.10vw, 0.86rem);
+  --step-0:   clamp(1.00rem, 0.96rem + 0.20vw, 1.125rem);
+  --step-1:   clamp(1.20rem, 1.12rem + 0.40vw, 1.40rem);
+  --step-2:   clamp(1.55rem, 1.35rem + 1.00vw, 2.20rem);
+  --step-3:   clamp(2.00rem, 1.60rem + 2.00vw, 3.20rem);
+  --step-4:   clamp(2.60rem, 1.90rem + 3.40vw, 4.40rem);
+  --step-hero: clamp(2.90rem, 1.40rem + 7.20vw, 7.00rem);
+
+  /* --- Spacing scale --- */
+  --space-2xs: 0.5rem;
+  --space-xs:  0.75rem;
+  --space-sm:  1rem;
+  --space-md:  1.5rem;
+  --space-lg:  2.5rem;
+  --space-xl:  4rem;
+  --space-2xl: 6rem;
+  --space-3xl: 9rem;
+
+  /* --- Layout --- */
+  --container: 1180px;
+  --measure: 62ch;          /* comfortable reading line-length */
+
+  /* --- Motion --- */
+  --ease-out: cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 /* ============================
-   3. RESET
+   2. RESET
    ============================ */
-* {
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -37,8 +68,17 @@ body {
   background-color: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-sans);
-  line-height: 1.6;
+  font-size: var(--step-0);
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
+  font-optical-sizing: auto;
+  overflow-x: hidden;
+}
+
+img,
+video {
+  display: block;
+  max-width: 100%;
 }
 
 a {
@@ -46,75 +86,168 @@ a {
   text-decoration: none;
 }
 
-h1, h2, h3 {
-  font-family: var(--font-serif);
-  font-weight: 500;
-  line-height: 1.15;
+ul,
+ol {
+  list-style: none;
 }
 
 /* ============================
-   4. NAVIGATION
+   3. TYPOGRAPHY
+   Fraunces for headings, Hanken Grotesk for everything else.
+   ============================ */
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+}
+
+h1 {
+  font-weight: 300;
+  font-size: var(--step-hero);
+  letter-spacing: -0.03em;
+  line-height: 1.02;
+  font-variation-settings: "opsz" 144;
+}
+
+h2 {
+  font-size: var(--step-4);
+  font-variation-settings: "opsz" 96;
+}
+
+h3 {
+  font-size: var(--step-2);
+  font-variation-settings: "opsz" 48;
+}
+
+h4 {
+  font-family: var(--font-sans);
+  font-size: var(--step-sm);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--color-accent);
+}
+
+p {
+  max-width: var(--measure);
+}
+
+/* small kicker line used in hero + contact */
+.eyebrow {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--step-1);
+  color: var(--color-accent);
+  margin-bottom: var(--space-md);
+}
+
+/* intro paragraph that sits under a section heading */
+.section-intro {
+  color: var(--color-text-muted);
+  font-size: var(--step-1);
+  max-width: 46ch;
+  margin-top: var(--space-md);
+  margin-bottom: var(--space-xl);
+}
+
+/* ============================
+   4. LAYOUT PRIMITIVES
+   ============================ */
+section {
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-block: var(--space-3xl);
+  padding-inline: var(--space-md);
+  scroll-margin-top: 90px;
+}
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  z-index: 500;
+  background: var(--color-accent);
+  color: var(--color-bg);
+  padding: 12px 20px;
+  font-size: var(--step-sm);
+}
+
+.skip-link:focus {
+  left: var(--space-md);
+  top: var(--space-md);
+}
+
+/* ============================
+   5. NAVIGATION
    ============================ */
 #navbar {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
+  inset: 0 0 auto 0;
   z-index: 100;
   background-color: transparent;
-  transition: background-color 0.4s ease, border-color 0.4s ease;
   border-bottom: 1px solid transparent;
+  transition: background-color 0.4s ease, border-color 0.4s ease;
 }
 
 #navbar.scrolled {
-  background-color: rgba(11, 12, 14, 0.9);
-  backdrop-filter: blur(8px);
-  border-bottom: 1px solid var(--color-border);
+  background-color: rgba(11, 12, 14, 0.85);
+  backdrop-filter: blur(10px);
+  border-bottom-color: var(--color-border);
 }
 
 .nav-inner {
-  max-width: var(--container-width);
-  margin: 0 auto;
-  padding: 20px 24px;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding: 22px var(--space-md);
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
 .nav-logo {
-  font-family: var(--font-serif);
-  font-size: 1.1rem;
-  letter-spacing: 0.05em;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  letter-spacing: 0.01em;
 }
 
 .nav-links {
   display: flex;
-  gap: 36px;
+  gap: 40px;
 }
 
 .nav-links a {
-  font-size: 0.85rem;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
+  position: relative;
+  font-size: var(--step-sm);
   color: var(--color-text-muted);
-  transition: color 0.3s ease;
+  padding-bottom: 4px;
+  background-image: linear-gradient(var(--color-accent), var(--color-accent));
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 1px;
+  transition: color 0.35s ease, background-size 0.45s var(--ease-out);
 }
 
 .nav-links a:hover,
-.nav-links a:focus {
-  color: var(--color-accent);
-}
-
-.nav-links a:focus {
-  outline: 1px solid var(--color-accent);
+.nav-links a:focus-visible {
+  color: var(--color-text);
+  background-size: 100% 1px;
 }
 
 /* ============================
-   5. HERO
+   6. HERO
+   Full-bleed video background with a dark gradient over it.
    ============================ */
 #hero {
   position: relative;
+  max-width: none;
+  margin: 0;
+  padding-block: 0;
+  padding-inline: 0;
   min-height: 100vh;
+  min-height: 100svh;
   display: flex;
   align-items: center;
   overflow: hidden;
@@ -126,11 +259,12 @@ h1, h2, h3 {
   z-index: 0;
 }
 
+.hero-video,
 .hero-bg img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center top;
+  object-position: center;
 }
 
 .hero-overlay {
@@ -138,56 +272,57 @@ h1, h2, h3 {
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(11, 12, 14, 0.5) 0%,
-    rgba(11, 12, 14, 0.75) 60%,
-    rgba(11, 12, 14, 0.95) 100%
+    rgba(11, 12, 14, 0.45) 0%,
+    rgba(11, 12, 14, 0.70) 55%,
+    rgba(11, 12, 14, 0.96) 100%
   );
+}
+
+.topo-lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  color: var(--color-accent);
+  opacity: 0.14;
+  z-index: 0;
 }
 
 .hero-content {
   position: relative;
   z-index: 1;
-  padding: 0 24px;
-  max-width: var(--container-width);
-  margin: 0 auto;
   width: 100%;
-}
-.eyebrow {
-  color: var(--color-accent);
-  font-size: 0.75rem;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  margin-bottom: 28px;
-  font-weight: 500;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding: 0 var(--space-md);
 }
 
 #hero h1 {
-  font-size: clamp(2.8rem, 9vw, 7rem);
-  letter-spacing: -0.02em;
-  max-width: 950px;
-  margin-bottom: 48px;
+  max-width: 16ch;
+  margin-bottom: var(--space-lg);
 }
 
 .hero-buttons {
   display: flex;
-  gap: 20px;
+  gap: var(--space-sm);
   flex-wrap: wrap;
 }
 
+/* ============================
+   7. BUTTONS
+   ============================ */
 .btn {
-  padding: 16px 32px;
-  font-size: 0.85rem;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  border-radius: 2px;
-  transition: all 0.3s ease;
-  cursor: pointer;
+  --btn-shift: 0px;
   display: inline-block;
-}
-
-.btn:focus {
-  outline: 2px solid var(--color-accent);
-  outline-offset: 2px;
+  padding: 16px 30px;
+  font-size: var(--step-sm);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: transform 0.35s var(--ease-out), background-color 0.35s ease,
+    border-color 0.35s ease, color 0.35s ease;
+  transform: translate(var(--btn-shift), var(--btn-shift));
 }
 
 .btn-primary {
@@ -196,11 +331,11 @@ h1, h2, h3 {
 }
 
 .btn-primary:hover {
-  opacity: 0.85;
+  background-color: var(--color-accent-soft);
 }
 
 .btn-secondary {
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-border-soft);
   color: var(--color-text);
 }
 
@@ -209,114 +344,385 @@ h1, h2, h3 {
   color: var(--color-accent);
 }
 
+.btn:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
 /* ============================
-   6. GENERIC SECTIONS (temporary — refined later)
+   8. SECTION HEADINGS RHYTHM
    ============================ */
-section {
-  max-width: var(--container-width);
-  margin: 0 auto;
-  padding: var(--section-padding);
+section > h2 {
+  margin-bottom: 0;
 }
 
-section h2 {
-  font-size: clamp(2rem, 4vw, 3rem);
-  margin-bottom: 24px;
-}
-
-footer {
-  text-align: center;
-  padding: 40px 24px;
-  color: var(--color-text-muted);
-  font-size: 0.85rem;
-  border-top: 1px solid var(--color-border);
-}
 /* ============================
-   7. ABOUT
+   9. ABOUT
    ============================ */
 .about-grid {
   display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
-  gap: 80px;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: var(--space-xl);
   align-items: start;
 }
 
-.about-text p {
+.about-text .lead {
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  line-height: 1.28;
+  color: var(--color-text);
+  max-width: 24ch;
+  margin: var(--space-md) 0 var(--space-lg);
+}
+
+.about-text p + p {
+  margin-top: var(--space-md);
+}
+
+.about-text p:not(.lead) {
   color: var(--color-text-muted);
-  margin-bottom: 20px;
-  max-width: 560px;
+}
+
+.about-image {
+  position: sticky;
+  top: 110px;
 }
 
 .about-image img {
   width: 100%;
   border-radius: 4px;
-  filter: grayscale(20%);
+  filter: grayscale(1) contrast(1.03) brightness(0.95);
+  transition: filter 0.9s var(--ease-out);
 }
 
-@media (max-width: 800px) {
-  .about-grid {
+.about-now {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: var(--space-xl);
+  margin-top: var(--space-2xl);
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--color-border);
+}
+
+.about-now h3 {
+  font-size: var(--step-1);
+  font-family: var(--font-sans);
+  font-weight: 600;
+  letter-spacing: 0;
+  margin-bottom: var(--space-md);
+}
+
+.about-now ul {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.about-now li {
+  position: relative;
+  padding-left: 26px;
+  color: var(--color-text-muted);
+  max-width: var(--measure);
+}
+
+.about-now li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 14px;
+  height: 1px;
+  background-color: var(--color-accent);
+}
+
+.about-now p {
+  color: var(--color-text-muted);
+}
+
+/* ============================
+   10. AVIATION
+   ============================ */
+.av-lead {
+  display: grid;
+  gap: var(--space-md);
+  margin-top: var(--space-md);
+  max-width: 62ch;
+}
+
+.av-lead p {
+  color: var(--color-text-muted);
+  max-width: none;
+}
+
+.av-lead p:first-child {
+  color: var(--color-text);
+  font-size: var(--step-1);
+}
+
+.av-photo {
+  margin-top: var(--space-2xl);
+}
+
+.av-photo img {
+  width: 100%;
+  max-height: 60vh;
+  object-fit: cover;
+  border-radius: 4px;
+  filter: grayscale(1) contrast(1.03) brightness(0.95);
+  transition: filter 0.9s var(--ease-out);
+}
+
+.reveal.in-view .av-photo img {
+  filter: none;
+}
+
+.av-block {
+  margin-top: var(--space-2xl);
+}
+
+.av-block > h3 {
+  font-family: var(--font-sans);
+  font-size: var(--step-1);
+  font-weight: 600;
+  letter-spacing: 0;
+  margin-bottom: var(--space-lg);
+  padding-bottom: var(--space-xs);
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* --- Flight-path journey (the one signature animation) --- */
+.journey-svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  display: block;
+  margin-bottom: var(--space-md);
+}
+
+.journey-svg .j-base {
+  stroke: var(--color-border-soft);
+  stroke-width: 1;
+}
+
+.journey-svg .j-line {
+  stroke: var(--color-accent);
+  stroke-width: 1.5;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+.journey-svg .j-dot {
+  fill: var(--color-bg);
+  stroke: var(--color-border-soft);
+  stroke-width: 1.5;
+  opacity: 0.4;
+}
+
+.journey-svg .j-plane {
+  fill: var(--color-accent);
+  transform-box: view-box;
+  transform-origin: 0 0;
+  transform: translateX(0);
+  opacity: 0;
+}
+
+.journey.is-flying .j-line {
+  animation: j-draw 3.2s linear forwards;
+}
+
+.journey.is-flying .j-dot {
+  animation: j-pop 0.5s ease forwards;
+}
+
+.journey.is-flying .j-dot:nth-of-type(1) { animation-delay: 0.15s; }
+.journey.is-flying .j-dot:nth-of-type(2) { animation-delay: 0.72s; }
+.journey.is-flying .j-dot:nth-of-type(3) { animation-delay: 1.29s; }
+.journey.is-flying .j-dot:nth-of-type(4) { animation-delay: 1.86s; }
+.journey.is-flying .j-dot:nth-of-type(5) { animation-delay: 2.43s; }
+.journey.is-flying .j-dot:nth-of-type(6) { animation-delay: 3.0s; }
+
+.journey.is-flying .j-plane {
+  animation: j-fly 3.2s linear forwards;
+}
+
+@keyframes j-draw {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes j-pop {
+  0% { opacity: 0.4; }
+  60% { opacity: 1; r: 5; }
+  100% { opacity: 1; }
+}
+
+@keyframes j-fly {
+  0% { transform: translateX(0); opacity: 0; }
+  8% { opacity: 1; }
+  92% { opacity: 1; }
+  100% { transform: translateX(500px); opacity: 0; }
+}
+
+.journey-stops {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: var(--space-sm);
+}
+
+.journey-stop {
+  text-align: center;
+  opacity: 0.32;
+}
+
+.journey.is-flying .journey-stop {
+  animation: j-light 0.5s ease forwards;
+  animation-delay: calc(var(--i) * 0.57s);
+}
+
+@keyframes j-light {
+  to { opacity: 1; }
+}
+
+.journey-code {
+  display: block;
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  color: var(--color-text);
+  line-height: 1.1;
+}
+
+.journey-name {
+  display: block;
+  margin-top: 4px;
+  font-size: var(--step-sm);
+  color: var(--color-text-muted);
+}
+
+/* --- Aircraft & simulator --- */
+.aircraft-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-lg) var(--space-xl);
+}
+
+.aircraft-card img {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  min-height: 160px;
+  object-fit: cover;
+  border-radius: 4px;
+  background-color: var(--color-bg-raised);
+  filter: grayscale(1) contrast(1.03) brightness(0.95);
+  transition: filter 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+}
+
+.aircraft-card:hover img {
+  filter: none;
+  transform: scale(1.02);
+}
+
+.aircraft-card h4 {
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  color: var(--color-text);
+  margin: var(--space-sm) 0 4px;
+}
+
+.aircraft-card p {
+  color: var(--color-text-muted);
+  font-size: var(--step-sm);
+  max-width: 42ch;
+}
+
+#aviation.in-view .aircraft-card {
+  animation: rise-in 0.7s var(--ease-out) backwards;
+}
+
+#aviation.in-view .aircraft-card:nth-child(2) { animation-delay: 0.08s; }
+#aviation.in-view .aircraft-card:nth-child(3) { animation-delay: 0.16s; }
+#aviation.in-view .aircraft-card:nth-child(4) { animation-delay: 0.24s; }
+
+/* --- Skill lists (compact term + one line) --- */
+.skill-list {
+  border-top: 1px solid var(--color-border);
+}
+
+.skill-list > div {
+  display: grid;
+  grid-template-columns: minmax(0, 15rem) 1fr;
+  gap: var(--space-md) var(--space-lg);
+  padding: var(--space-md) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.skill-list dt {
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  color: var(--color-text);
+}
+
+.skill-list dd {
+  color: var(--color-text-muted);
+  max-width: 52ch;
+}
+
+/* --- Closing statement --- */
+.av-close {
+  margin-top: var(--space-3xl);
+  padding-top: var(--space-xl);
+  border-top: 1px solid var(--color-border);
+}
+
+.av-close-lead {
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  line-height: 1.3;
+  color: var(--color-text);
+  max-width: 32ch;
+}
+
+.av-close-sub {
+  margin-top: var(--space-md);
+  color: var(--color-text-muted);
+  max-width: 48ch;
+}
+
+@media (max-width: 900px) {
+  .aircraft-grid {
     grid-template-columns: 1fr;
-    gap: 40px;
+  }
+}
+
+@media (max-width: 640px) {
+  .journey-svg {
+    display: none;
+  }
+
+  .journey-stops {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-md) var(--space-sm);
+  }
+
+  .skill-list > div {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+}
+
+@media (max-width: 430px) {
+  .journey-stops {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
 /* ============================
-   8. AVIATION / TIMELINE
-   ============================ */
-.section-intro {
-  color: var(--color-text-muted);
-  margin-bottom: 48px;
-  max-width: 500px;
-}
-
-.timeline {
-  display: flex;
-  flex-direction: column;
-  border-top: 1px solid var(--color-border);
-  margin-bottom: 48px;
-}
-
-.timeline-item {
-  display: flex;
-  align-items: center;
-  gap: 32px;
-  padding: 28px 0;
-  border-bottom: 1px solid var(--color-border);
-}
-
-.timeline-marker {
-  font-family: var(--font-serif);
-  font-size: 1.2rem;
-  color: var(--color-accent);
-  width: 48px;
-  flex-shrink: 0;
-}
-
-.timeline-item h3 {
-  font-size: 1.4rem;
-  margin-bottom: 4px;
-}
-
-.timeline-item p {
-  color: var(--color-text-muted);
-  font-size: 0.95rem;
-}
-
-.aviation-image img {
-  width: 100%;
-  max-width: 500px;
-  border-radius: 4px;
-  filter: grayscale(20%);
-}
-
-/* ============================
-   9. SELECTED WORK
+   11. SELECTED WORK
    ============================ */
 .work-item {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 60px;
-  align-items: center;
-  padding: 60px 0;
+  grid-template-columns: 5fr 7fr;
+  gap: var(--space-xl);
+  padding-block: var(--space-2xl);
   border-bottom: 1px solid var(--color-border);
 }
 
@@ -324,210 +730,263 @@ footer {
   border-top: 1px solid var(--color-border);
 }
 
-.work-item-reverse .work-image {
+.work-item--reverse .work-media {
   order: 2;
 }
 
-.work-item-reverse .work-details {
-  order: 1;
+.work-media {
+  position: sticky;
+  top: 110px;
+  align-self: start;
 }
 
-.work-image img {
+.work-media img {
   width: 100%;
   border-radius: 4px;
-  background-color: #16171a;
-  padding: 40px;
+  background-color: var(--color-bg-raised);
+  padding: 44px;
 }
 
 .work-year {
+  font-size: var(--step-sm);
+  letter-spacing: 0.08em;
   color: var(--color-accent);
-  font-size: 0.85rem;
-  letter-spacing: 0.1em;
 }
 
-.work-details h3 {
-  font-size: 2rem;
-  margin: 12px 0 4px;
+.work-body > h3 {
+  font-size: var(--step-3);
+  margin: var(--space-2xs) 0 2px;
 }
 
 .work-role {
   color: var(--color-text-muted);
-  font-size: 0.9rem;
-  margin-bottom: 20px;
+  margin-bottom: var(--space-md);
 }
 
-.work-description {
+.work-block {
+  margin-top: var(--space-md);
+}
+
+.work-block h4 {
+  margin-bottom: 4px;
+}
+
+.work-block p {
   color: var(--color-text-muted);
-  margin-bottom: 20px;
-  max-width: 480px;
 }
 
 .work-skills {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  list-style: none;
-  margin-bottom: 24px;
+  gap: var(--space-2xs);
+  margin: var(--space-lg) 0 var(--space-md);
 }
 
 .work-skills li {
-  font-size: 0.75rem;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
+  font-size: var(--step-sm);
   color: var(--color-text-muted);
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-border-soft);
   padding: 6px 12px;
   border-radius: 2px;
 }
 
+/* animated-underline link, no arrow glyph */
 .work-link {
+  display: inline-block;
   color: var(--color-accent);
-  font-size: 0.9rem;
-  border-bottom: 1px solid var(--color-accent);
-  padding-bottom: 2px;
-  transition: opacity 0.3s ease;
+  font-size: var(--step-sm);
+  letter-spacing: 0.02em;
+  padding-bottom: 3px;
+  background-image: linear-gradient(var(--color-accent), var(--color-accent));
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 100% 1px;
+  transition: background-size 0.45s var(--ease-out), color 0.35s ease;
 }
 
 .work-link:hover,
-.work-link:focus {
-  opacity: 0.8;
+.work-link:focus-visible {
+  color: var(--color-accent-soft);
+  background-size: 0% 1px;
 }
 
-.work-link:focus {
-  outline: 1px solid var(--color-accent);
-  outline-offset: 2px;
-}
-
-@media (max-width: 800px) {
-  .work-item,
-  .work-item-reverse .work-image,
-  .work-item-reverse .work-details {
-    order: initial;
-  }
-  .work-item {
-    grid-template-columns: 1fr;
-    gap: 30px;
-  }
-}
 /* ============================
-   10. CONTACT
+   12. CONTACT
    ============================ */
 #contact {
   text-align: center;
-  padding: 160px 24px;
 }
 
-#contact .eyebrow {
-  justify-content: center;
+#contact .section-intro {
+  margin-inline: auto;
 }
 
 .contact-email {
   display: inline-block;
-  font-family: var(--font-serif);
-  font-size: clamp(1.5rem, 4vw, 2.5rem);
-  margin: 24px 0 32px;
-  border-bottom: 1px solid var(--color-border);
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 5.5vw, 2.6rem);
+  margin: var(--space-md) 0 var(--space-lg);
+  max-width: 100%;
   padding-bottom: 8px;
-  transition: color 0.3s ease, border-color 0.3s ease;
+  background-image: linear-gradient(var(--color-accent), var(--color-accent));
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 1px;
+  transition: color 0.35s ease, background-size 0.5s var(--ease-out);
 }
 
 .contact-email:hover,
-.contact-email:focus {
+.contact-email:focus-visible {
   color: var(--color-accent);
-  border-color: var(--color-accent);
-}
-
-.contact-email:focus {
-  outline: 1px solid var(--color-accent);
-  outline-offset: 4px;
+  background-size: 100% 1px;
 }
 
 .social-links {
   display: flex;
   justify-content: center;
-  gap: 24px;
+  gap: var(--space-md);
 }
 
 .social-links a {
   color: var(--color-text-muted);
-  font-size: 0.85rem;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  transition: color 0.3s ease;
+  font-size: var(--step-sm);
+  letter-spacing: 0.02em;
+  transition: color 0.35s ease;
 }
 
 .social-links a:hover,
-.social-links a:focus {
+.social-links a:focus-visible {
   color: var(--color-accent);
 }
 
-.social-links a:focus {
-  outline: 1px solid var(--color-accent);
-  outline-offset: 2px;
+/* ============================
+   13. FOOTER
+   ============================ */
+footer {
+  text-align: center;
+  padding: var(--space-lg) var(--space-md);
+  color: var(--color-text-muted);
+  font-size: var(--step-sm);
+  border-top: 1px solid var(--color-border);
+}
+
+.footer-loc {
+  margin-top: 4px;
+  letter-spacing: 0.08em;
 }
 
 /* ============================
-   11. SCROLL REVEAL ANIMATION
+   14. FOCUS VISIBILITY (keyboard users)
+   ============================ */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 1px;
+}
+
+/* ============================
+   15. SCROLL REVEAL + IMAGE DEVELOP
+   One quiet fade — not a slide on every element.
    ============================ */
 .reveal {
   opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
+  transform: translateY(14px);
+  transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
 }
 
 .reveal.in-view {
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .reveal {
+.reveal.in-view img {
+  filter: grayscale(0) contrast(1) brightness(1);
+}
+
+.about-image:hover img,
+.aviation-image:hover img {
+  filter: grayscale(0) contrast(1) brightness(1);
+}
+
+/* ============================
+   16. HERO LOAD SEQUENCE
+   One orchestrated entrance on first paint.
+   ============================ */
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
     opacity: 1;
     transform: none;
-    transition: none;
   }
 }
+
+.hero-content > * {
+  animation: rise-in 0.9s var(--ease-out) backwards;
+}
+
+.hero-content > .eyebrow {
+  animation-delay: 0.15s;
+}
+
+.hero-content > h1 {
+  animation-delay: 0.3s;
+}
+
+.hero-content > .hero-buttons {
+  animation-delay: 0.5s;
+}
+
 /* ============================
-   13. GRAIN TEXTURE
+   17. GRAIN TEXTURE
    ============================ */
 .grain {
   position: fixed;
   inset: 0;
   z-index: 300;
   pointer-events: none;
-  opacity: 0.04;
+  opacity: 0.035;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 /* ============================
-   14. CUSTOM CURSOR
+   18. CUSTOM CURSOR (fine pointers only)
    ============================ */
 .cursor-dot {
   position: fixed;
   top: 0;
   left: 0;
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   background-color: var(--color-accent);
+  border: 1px solid transparent;
   pointer-events: none;
   z-index: 400;
   transform: translate(-50%, -50%);
-  transition: width 0.25s ease, height 0.25s ease, background-color 0.25s ease;
+  transition: width 0.3s var(--ease-out), height 0.3s var(--ease-out),
+    background-color 0.3s ease, border-color 0.3s ease;
   mix-blend-mode: difference;
 }
 
 .cursor-dot.hovering {
-  width: 40px;
-  height: 40px;
-  background-color: var(--color-text);
+  width: 34px;
+  height: 34px;
+  background-color: transparent;
+  border-color: var(--color-text);
 }
 
 @media (max-width: 800px) {
-  .cursor-dot { display: none; }
+  .cursor-dot {
+    display: none;
+  }
 }
+
 /* ============================
-   12. MOBILE NAVIGATION
+   19. MOBILE NAVIGATION
    ============================ */
 #menu-toggle {
   display: none;
@@ -558,6 +1017,43 @@ footer {
   transform: translateY(-4px) rotate(-45deg);
 }
 
+/* ============================
+   20. RESPONSIVE
+   ============================ */
+@media (max-width: 900px) {
+  :root {
+    --space-3xl: 6rem;
+    --space-2xl: 4.5rem;
+  }
+
+  .about-grid,
+  .about-now,
+  .work-item,
+  .work-item--reverse {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+
+  .about-image,
+  .work-media {
+    position: static;
+  }
+
+  .about-image {
+    order: -1;
+    max-width: 420px;
+  }
+
+  .work-item--reverse .work-media {
+    order: 0;
+  }
+
+  .work-media img {
+    padding: 32px;
+    max-width: 380px;
+  }
+}
+
 @media (max-width: 800px) {
   #menu-toggle {
     display: flex;
@@ -565,14 +1061,18 @@ footer {
 
   .nav-links {
     position: fixed;
-    inset: 0;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
     background-color: var(--color-bg);
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 40px;
+    gap: var(--space-lg);
     transform: translateY(-100%);
-    transition: transform 0.4s ease;
+    transition: transform 0.45s var(--ease-out);
     z-index: 150;
   }
 
@@ -581,61 +1081,68 @@ footer {
   }
 
   .nav-links a {
-    font-size: 1.5rem;
+    font-size: var(--step-2);
+    color: var(--color-text);
   }
 }
+
+@media (max-width: 540px) {
+  .hero-buttons {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn {
+    text-align: center;
+  }
+}
+
 /* ============================
-   15. SECTION LABELS (instrument readout style)
+   21. REDUCED MOTION
+   Honour the OS "reduce motion" setting.
    ============================ */
-.section-label {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 32px;
-}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 
-.section-label .num {
-  font-family: var(--font-sans);
-  font-size: 0.75rem;
-  letter-spacing: 0.15em;
-  color: var(--color-accent);
-}
+  html {
+    scroll-behavior: auto;
+  }
 
-.section-label .line {
-  flex: 1;
-  max-width: 60px;
-  height: 1px;
-  background-color: var(--color-border);
-}
+  .hero-content > * {
+    animation: none !important;
+  }
 
-.section-label .coord {
-  font-family: var(--font-sans);
-  font-size: 0.7rem;
-  letter-spacing: 0.1em;
-  color: var(--color-text-muted);
-  text-transform: uppercase;
-}
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 
-/* Refined typographic rhythm */
-h2 { letter-spacing: -0.01em; }
+  /* Flight-path journey: show the finished state, no travel. */
+  .journey-svg .j-line {
+    stroke-dashoffset: 0 !important;
+  }
 
-.eyebrow {
-  letter-spacing: 0.25em;
-  font-weight: 500;
-}
+  .journey-svg .j-dot {
+    opacity: 1 !important;
+  }
 
-section h2 {
-  margin-bottom: 8px;
-}
-/* ============================
-   16. TOPOGRAPHIC LINE MOTIF
-   ============================ */
-.topo-lines {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  color: var(--color-accent);
-  opacity: 0.15;
-  z-index: 0;
+  .journey-svg .j-plane {
+    display: none !important;
+  }
+
+  .journey-stop {
+    opacity: 1 !important;
+  }
+
+  #aviation.in-view .aircraft-card {
+    animation: none !important;
+  }
 }
