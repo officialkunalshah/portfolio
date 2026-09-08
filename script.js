@@ -5,6 +5,36 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
 const finePointer = window.matchMedia('(pointer: fine)').matches;
 
 // ============================
+// 0b. SMOOTH SCROLL (Lenis)
+// ============================
+let lenis = null;
+
+if (!prefersReducedMotion && window.Lenis) {
+  lenis = new Lenis({ lerp: 0.1, smoothWheel: true });
+  const raf = (time) => {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+  };
+  requestAnimationFrame(raf);
+}
+
+// In-page anchors: eased scroll via Lenis when active, native otherwise.
+document.querySelectorAll('a[href^="#"]').forEach((link) => {
+  link.addEventListener('click', (e) => {
+    const id = link.getAttribute('href');
+    if (id.length < 2) return;
+    const target = document.querySelector(id);
+    if (!target) return;
+    e.preventDefault();
+    if (lenis) {
+      lenis.scrollTo(target, { offset: -78 });
+    } else {
+      target.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+    }
+  });
+});
+
+// ============================
 // 1. NAVBAR SCROLL EFFECT
 // ============================
 const navbar = document.getElementById('navbar');
@@ -141,6 +171,71 @@ if (journey) {
     }, { threshold: 0.45 });
     journeyObserver.observe(journey);
   }
+}
+
+// ============================
+// 4c. CORE AREAS — staggered reveal when it scrolls in
+// ============================
+const workCore = document.querySelector('.work-core');
+
+if (workCore) {
+  if (prefersReducedMotion || !window.IntersectionObserver) {
+    workCore.classList.add('is-lit');
+  } else {
+    const coreObserver = new IntersectionObserver((entries, obs) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          workCore.classList.add('is-lit');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.4 });
+    coreObserver.observe(workCore);
+  }
+}
+
+// ============================
+// 4d. SCROLL-SPY NAV — highlight the section you're looking at
+// ============================
+const navMap = new Map();
+document.querySelectorAll('.nav-links a[href^="#"]').forEach((a) => {
+  navMap.set(a.getAttribute('href').slice(1), a);
+});
+const spySections = ['about', 'aviation', 'work', 'contact']
+  .map((id) => document.getElementById(id))
+  .filter(Boolean);
+
+if (window.IntersectionObserver && spySections.length) {
+  const spyObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      navMap.forEach((a) => a.classList.remove('is-current'));
+      const active = navMap.get(entry.target.id);
+      if (active) active.classList.add('is-current');
+    });
+  }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+  spySections.forEach((s) => spyObserver.observe(s));
+}
+
+// ============================
+// 4e. KATHMANDU LOCAL TIME (footer)
+// ============================
+const footerTime = document.getElementById('footer-time');
+if (footerTime) {
+  const tick = () => {
+    try {
+      const t = new Date().toLocaleTimeString('en-GB', {
+        timeZone: 'Asia/Kathmandu',
+        hour: '2-digit',
+        minute: '2-digit',
+      });
+      footerTime.textContent = 'Kathmandu ' + t;
+    } catch (e) {
+      footerTime.textContent = 'Kathmandu, Nepal';
+    }
+  };
+  tick();
+  setInterval(tick, 30000);
 }
 
 // ============================

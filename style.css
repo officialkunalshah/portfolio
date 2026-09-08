@@ -71,8 +71,45 @@ body {
   font-size: var(--step-0);
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   font-optical-sizing: auto;
+  font-variant-numeric: oldstyle-nums;
+  text-rendering: optimizeLegibility;
   overflow-x: hidden;
+}
+
+/* --- Lenis smooth scroll --- */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* --- Typographic finish --- */
+h1,
+h2,
+h3,
+h4,
+.core-list,
+.about-text .lead,
+.av-close-lead,
+.footer-mark {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
 }
 
 img,
@@ -232,6 +269,12 @@ section {
 
 .nav-links a:hover,
 .nav-links a:focus-visible {
+  color: var(--color-text);
+  background-size: 100% 1px;
+}
+
+/* scroll-spy: current section */
+.nav-links a.is-current {
   color: var(--color-text);
   background-size: 100% 1px;
 }
@@ -707,6 +750,15 @@ section > h2 {
     grid-template-columns: 1fr;
     gap: 4px;
   }
+
+  .core-list {
+    font-size: var(--step-0);
+    line-height: 1.8;
+  }
+
+  .work-stats {
+    gap: var(--space-md) var(--space-lg);
+  }
 }
 
 @media (max-width: 430px) {
@@ -728,6 +780,10 @@ section > h2 {
 
 .work-item:first-of-type {
   border-top: 1px solid var(--color-border);
+}
+
+.work-item--reverse {
+  grid-template-columns: 7fr 5fr;
 }
 
 .work-item--reverse .work-media {
@@ -775,19 +831,180 @@ section > h2 {
   color: var(--color-text-muted);
 }
 
-.work-skills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2xs);
-  margin: var(--space-lg) 0 var(--space-md);
+/* Section-level "at a glance" statement of what Kunal does */
+.work-core {
+  position: relative;
+  margin: var(--space-lg) 0;
+  padding: var(--space-lg) 0;
 }
 
-.work-skills li {
+.work-core::before,
+.work-core::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-border) 12%,
+    var(--color-border) 88%,
+    transparent
+  );
+}
+
+.work-core::before {
+  top: 0;
+}
+
+.work-core::after {
+  bottom: 0;
+}
+
+.work-core h3 {
+  font-family: var(--font-sans);
+  font-size: var(--step-sm);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--color-accent);
+  margin-bottom: var(--space-md);
+}
+
+.core-list {
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  line-height: 1.9;
+  color: var(--color-text);
+  max-width: 58ch;
+}
+
+.core-list span {
+  display: inline-block;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(0.45em);
+  transition: opacity 0.55s var(--ease-out), transform 0.55s var(--ease-out),
+    color 0.3s ease;
+}
+
+.core-list span:not(:first-child)::before {
+  content: "·";
+  margin-right: 0.5em;
+  color: var(--color-accent);
+  opacity: 0.75;
+}
+
+.work-core.is-lit .core-list span {
+  opacity: 1;
+  transform: none;
+  transition-delay: calc(var(--i) * 55ms);
+}
+
+.core-list span:hover {
+  color: var(--color-accent);
+}
+
+/* space out the multi-paragraph case-study copy */
+.work-block p + p {
+  margin-top: var(--space-sm);
+}
+
+/* drop cap on each case study's opening line */
+.work-body > .work-block:first-of-type > p:first-of-type::first-letter {
+  float: left;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 3.1em;
+  line-height: 0.86;
+  margin: 0.02em 0.14em 0 0;
+  color: var(--color-accent);
+}
+
+/* Outcome stat row */
+.work-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-lg) var(--space-2xl);
+  margin-bottom: var(--space-lg);
+}
+
+.work-stats li {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.stat-num {
+  font-family: var(--font-display);
+  font-size: var(--step-3);
+  font-weight: 400;
+  line-height: 1;
+  color: var(--color-text);
+  font-variant-numeric: oldstyle-nums;
+}
+
+.stat-label {
   font-size: var(--step-sm);
   color: var(--color-text-muted);
-  border: 1px solid var(--color-border-soft);
-  padding: 6px 12px;
-  border-radius: 2px;
+}
+
+/* Per-project capability index — a ruled editorial list, not cards */
+.work-caps {
+  margin-top: var(--space-xl);
+}
+
+.work-caps h4 {
+  font-family: var(--font-sans);
+  font-size: var(--step-sm);
+  font-weight: 600;
+  color: var(--color-accent);
+  margin-bottom: var(--space-md);
+}
+
+.work-caps ul {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: var(--space-xl);
+  border-top: 1px solid var(--color-border);
+}
+
+.work-caps li {
+  position: relative;
+  padding: 15px 0 15px 24px;
+  border-bottom: 1px solid var(--color-border);
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  line-height: 1.25;
+  color: var(--color-text-muted);
+  transition: color 0.4s var(--ease-out), padding-left 0.4s var(--ease-out);
+}
+
+.work-caps li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 1.15em;
+  width: 11px;
+  height: 1px;
+  background-color: var(--color-border-soft);
+  transition: width 0.4s var(--ease-out), background-color 0.4s ease;
+}
+
+.work-caps li:hover {
+  color: var(--color-text);
+  padding-left: 34px;
+}
+
+.work-caps li:hover::before {
+  width: 22px;
+  background-color: var(--color-accent);
+}
+
+@media (max-width: 640px) {
+  .work-caps ul {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* animated-underline link, no arrow glyph */
@@ -863,16 +1080,89 @@ section > h2 {
    13. FOOTER
    ============================ */
 footer {
+  position: relative;
+  max-width: var(--container);
+  margin-inline: auto;
   text-align: center;
-  padding: var(--space-lg) var(--space-md);
+  padding: var(--space-2xl) var(--space-md) var(--space-xl);
   color: var(--color-text-muted);
   font-size: var(--step-sm);
-  border-top: 1px solid var(--color-border);
 }
 
-.footer-loc {
-  margin-top: 4px;
-  letter-spacing: 0.08em;
+footer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: var(--space-md);
+  right: var(--space-md);
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-border) 12%,
+    var(--color-border) 88%,
+    transparent
+  );
+}
+
+.footer-mark {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--step-3);
+  font-weight: 300;
+  line-height: 1.2;
+  color: var(--color-text);
+  max-width: none;
+  margin-bottom: var(--space-lg);
+}
+
+.footer-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-sm) var(--space-lg);
+  margin-bottom: var(--space-lg);
+}
+
+.footer-meta a,
+.footer-time {
+  position: relative;
+  color: var(--color-text-muted);
+  letter-spacing: 0.02em;
+  padding-bottom: 3px;
+  transition: color 0.35s ease;
+}
+
+.footer-meta a {
+  background-image: linear-gradient(var(--color-accent), var(--color-accent));
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 1px;
+  transition: color 0.35s ease, background-size 0.45s var(--ease-out);
+}
+
+.footer-meta a:hover,
+.footer-meta a:focus-visible {
+  color: var(--color-text);
+  background-size: 100% 1px;
+}
+
+.footer-time::before {
+  content: "";
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  margin-right: 8px;
+  border-radius: 50%;
+  background-color: var(--color-accent);
+  vertical-align: middle;
+}
+
+.footer-legal {
+  font-size: var(--step-sm);
+  color: var(--color-text-muted);
+  opacity: 0.7;
 }
 
 /* ============================
@@ -1144,5 +1434,10 @@ button:focus-visible {
 
   #aviation.in-view .aircraft-card {
     animation: none !important;
+  }
+
+  .core-list span {
+    opacity: 1 !important;
+    transform: none !important;
   }
 }
