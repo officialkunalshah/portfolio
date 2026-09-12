@@ -5,6 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#0B0C0E">
 
+  <!-- ================================================================
+       SEO / META — this block is specific to this person's deployment.
+       When creating a new site from the template, edit everything in
+       this block (title, description, keywords, canonical URL, OG
+       tags, Twitter tags, JSON-LD). See TEMPLATE-GUIDE.md.
+       ================================================================ -->
+
   <!-- ===== SEO / PRIMARY META ===== -->
   <title>Kunal Shah — Pilot, Founder &amp; Creative Director</title>
   <meta name="description" content="Nepali commercial pilot (CPL, IR, MER, Frozen ATPL) and Founder / Brand &amp; Creative Director of HIMAL Legacy and KitNation Nepal.">
@@ -114,6 +121,7 @@
     ]
   }
   </script>
+  <!-- ===== END SEO / META BLOCK ===== -->
 </head>
 <body>
   <div class="grain" aria-hidden="true"></div>
@@ -124,17 +132,12 @@
   <!-- ===== NAVIGATION ===== -->
   <header id="navbar">
     <div class="nav-inner">
-      <a href="#hero" class="nav-logo">Kunal Shah</a>
+      <a href="#hero" class="nav-logo" id="nav-logo"></a>
       <button id="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
         <span></span>
         <span></span>
       </button>
-      <nav class="nav-links" id="nav-links">
-        <a href="#about">About</a>
-        <a href="#aviation">Aviation</a>
-        <a href="#work">Work</a>
-        <a href="#contact">Contact</a>
-      </nav>
+      <nav class="nav-links" id="nav-links"></nav>
     </div>
   </header>
 
@@ -143,29 +146,24 @@
     <div class="hero-bg">
       <video
         class="hero-video"
+        id="hero-video"
         autoplay
         muted
         loop
         playsinline
-        preload="metadata"
-        poster="images/hero-studio.jpg">
-        <source src="images/hero-video.mp4" type="video/mp4">
-        <img src="images/hero-studio.jpg" alt="Kunal Shah, studio portrait">
+        preload="metadata">
       </video>
       <div class="hero-overlay"></div>
-      <svg class="topo-lines" viewBox="0 0 1200 800" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <svg id="topo-lines" class="topo-lines" viewBox="0 0 1200 800" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <path d="M0,600 Q300,550 600,600 T1200,580" stroke="currentColor" fill="none" stroke-width="1"/>
         <path d="M0,650 Q300,590 600,650 T1200,630" stroke="currentColor" fill="none" stroke-width="1"/>
         <path d="M0,700 Q300,640 600,700 T1200,680" stroke="currentColor" fill="none" stroke-width="1"/>
       </svg>
     </div>
     <div class="hero-content">
-      <p class="eyebrow">I fly. I build. I create.</p>
-      <h1>Building ideas <br>that take flight.</h1>
-      <div class="hero-buttons">
-        <a href="#work" class="btn btn-primary">Explore my work</a>
-        <a href="#contact" class="btn btn-secondary">Let's connect</a>
-      </div>
+      <p class="eyebrow" id="hero-eyebrow"></p>
+      <h1 id="hero-headline"></h1>
+      <div class="hero-buttons" id="hero-buttons"></div>
     </div>
   </section>
 
@@ -173,286 +171,105 @@
   <section id="about">
     <div class="about-grid">
       <div class="about-text">
-        <h2>About</h2>
-        <p class="lead">I'm Kunal Shah — a pilot from Nepal, and an entrepreneur, builder, and creative thinker.</p>
-        <p>Aviation shaped the way I think. I'm drawn to machines, systems, and technology, and to the process of turning an idea into something real. Learning to fly taught me discipline, precision, responsibility, and the habit of thinking several steps ahead.</p>
-        <p>Today I'm building businesses and brands while continuing my aviation career. My work sits at the intersection of aviation, entrepreneurship, technology, branding, and product development. I'm the Founder / Brand &amp; Creative Director of HIMAL Legacy — responsible for its vision, brand identity, creative direction, product positioning, digital experience, and growth — and I'm involved in KitNation Nepal, where I work on building the brand and shaping its direction.</p>
-        <p>I don't think of myself only as someone who runs businesses. I'm a builder: someone who notices an opportunity, imagines what it could become, and then finds ways to make it real. I like thinking about the whole journey of an idea — from a problem, to a product, to a brand, to an experience, to something in the hands of real customers.</p>
-        <p>My long-term ambition is to build things that originate from Nepal but aren't limited by it — brands, products, and experiences that can compete internationally while carrying the creativity and ambition of where they came from. I'm early in that journey, and I'm actively building, learning, and experimenting.</p>
+        <h2 id="about-heading"></h2>
+        <p class="lead" id="about-lead"></p>
+        <div id="about-paragraphs"></div>
       </div>
       <div class="about-image">
-        <img src="images/about-studio.jpg" alt="Kunal Shah">
+        <img id="about-image" src="" alt="">
       </div>
     </div>
 
     <div class="about-now">
       <div class="about-now-col">
-        <h3>What I'm doing now</h3>
-        <ul>
-          <li>Pursuing my aviation career and the next stage of my flying journey</li>
-          <li>Building and developing HIMAL Legacy</li>
-          <li>Working on KitNation Nepal</li>
-          <li>Exploring technology and AI as tools for building businesses, brands, and creative work</li>
-          <li>Developing my personal brand and digital presence</li>
-        </ul>
+        <h3 id="about-doing-title"></h3>
+        <ul id="about-doing-list"></ul>
       </div>
       <div class="about-now-col">
-        <h3>What's next</h3>
-        <p>Continuing to fly, build, create, and explore new opportunities across aviation, entrepreneurship, technology, and creative business.</p>
+        <h3 id="about-next-title"></h3>
+        <p id="about-next-text"></p>
       </div>
     </div>
   </section>
 
-  <!-- ===== AVIATION ===== -->
-  <section id="aviation">
-    <h2>Aviation</h2>
-    <div class="av-lead">
-      <p>Trained at Royhle Aviation Academy in the Philippines, where I progressed from initial flight training through commercial, instrument, and multi-engine qualifications.</p>
-      <p>Aviation is more than a career for me. It's where my curiosity about machines, systems, decision-making, and continuous learning comes together. I'm eager to keep learning, build experience, and keep progressing toward the airline cockpit.</p>
-    </div>
+  <!-- ===== JOURNEY (Aviation) — shortened homepage version =====
+       Intro + timeline only. Aircraft/simulator, flight skills, core
+       skills and the closing statement live on their own page
+       (aviation.html) instead, reached via the "read more" link. -->
+  <section id="journey">
+    <h2 id="journey-heading"></h2>
+    <div class="av-lead" id="journey-intro"></div>
 
     <figure class="av-photo">
-      <img src="images/aviation-pilot.jpg" alt="Kunal Shah in the cockpit, in pilot uniform">
+      <img id="journey-photo" src="" alt="">
     </figure>
 
     <div class="av-block">
-      <h3>Flight training &amp; qualifications</h3>
+      <h3 id="journey-timeline-title"></h3>
       <div class="journey">
-        <svg class="journey-svg" viewBox="0 0 600 30" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <line class="j-base" x1="50" y1="15" x2="550" y2="15"/>
-          <line class="j-line" x1="50" y1="15" x2="550" y2="15" pathLength="1"/>
-          <circle class="j-dot" cx="50"  cy="15" r="3.5"/>
-          <circle class="j-dot" cx="150" cy="15" r="3.5"/>
-          <circle class="j-dot" cx="250" cy="15" r="3.5"/>
-          <circle class="j-dot" cx="350" cy="15" r="3.5"/>
-          <circle class="j-dot" cx="450" cy="15" r="3.5"/>
-          <circle class="j-dot" cx="550" cy="15" r="3.5"/>
-          <g class="j-plane"><path d="M44,9 L59,15 L44,21 L48,15 Z"/></g>
-        </svg>
-        <ol class="journey-stops">
-          <li class="journey-stop" style="--i:0"><span class="journey-code">SPL</span><span class="journey-name">Student Pilot License</span></li>
-          <li class="journey-stop" style="--i:1"><span class="journey-code">PPL</span><span class="journey-name">Private Pilot License</span></li>
-          <li class="journey-stop" style="--i:2"><span class="journey-code">CPL</span><span class="journey-name">Commercial Pilot License</span></li>
-          <li class="journey-stop" style="--i:3"><span class="journey-code">IR</span><span class="journey-name">Instrument Rating</span></li>
-          <li class="journey-stop" style="--i:4"><span class="journey-code">MER</span><span class="journey-name">Multi-Engine Rating</span></li>
-          <li class="journey-stop" style="--i:5"><span class="journey-code">Frozen ATPL</span><span class="journey-name">Airline Transport Pilot pathway</span></li>
-        </ol>
+        <svg class="journey-svg" id="journey-svg" viewBox="0 0 600 30" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"></svg>
+        <ol class="journey-stops" id="journey-stops"></ol>
       </div>
     </div>
 
-    <div class="av-block">
-      <h3>Aircraft &amp; simulator</h3>
-      <div class="aircraft-grid">
-        <figure class="aircraft-card">
-          <img src="images/aircraft-cessna-152.jpg" alt="Cessna 152" loading="lazy">
-          <figcaption>
-            <h4>Cessna 152</h4>
-            <p>Primary training — normal operations, takeoffs and landings, crosswind work, emergency procedures, and aircraft handling.</p>
-          </figcaption>
-        </figure>
-        <figure class="aircraft-card">
-          <img src="images/aircraft-cessna-172.jpg" alt="Cessna 172" loading="lazy">
-          <figcaption>
-            <h4>Cessna 172</h4>
-            <p>Skill development — landing technique, emergency procedures, handling, and operational decision-making.</p>
-          </figcaption>
-        </figure>
-        <figure class="aircraft-card">
-          <img src="images/aircraft-pa34.jpg" alt="Piper PA-34 Seneca" loading="lazy">
-          <figcaption>
-            <h4>Piper PA-34</h4>
-            <p>Multi-engine training — twin-engine operations and engine-out procedures.</p>
-          </figcaption>
-        </figure>
-        <figure class="aircraft-card">
-          <img src="images/aircraft-redbird.jpg" alt="Redbird flight simulator" loading="lazy">
-          <figcaption>
-            <h4>Redbird Flight Simulator</h4>
-            <p>Simulator training — instrument procedures, cockpit workflows, emergency scenarios, and workload management.</p>
-          </figcaption>
-        </figure>
-      </div>
-    </div>
+    <div class="journey-readmore" id="journey-readmore"></div>
+  </section>
 
-    <div class="av-block">
-      <h3>Flight skills</h3>
-      <dl class="skill-list">
-        <div><dt>Crosswind landings</dt><dd>Wind correction, approach alignment, and landing technique in crosswind conditions.</dd></div>
-        <div><dt>Forward slips</dt><dd>Controlled descent and aircraft handling using forward slips.</dd></div>
-        <div><dt>Side slips</dt><dd>Side-slip technique for crosswind correction and runway alignment on landing.</dd></div>
-        <div><dt>Stall recovery</dt><dd>Recognizing and recovering from stalls while keeping the aircraft under control.</dd></div>
-        <div><dt>Engine failure procedures</dt><dd>Simulated engine failures in the C152, C172, and PA-34 — aircraft control, landing-area selection, and emergency drills.</dd></div>
-        <div><dt>Emergency procedures</dt><dd>Responding to simulated abnormal situations while prioritizing control, awareness, and safe decisions.</dd></div>
-      </dl>
-    </div>
-
-    <div class="av-block">
-      <h3>Core skills</h3>
-      <dl class="skill-list">
-        <div><dt>Safety first</dt><dd>Preparation, procedures, risk awareness, and sound decision-making on every flight.</dd></div>
-        <div><dt>Crew resource management</dt><dd>Communication, teamwork, coordination, and workload management in the cockpit.</dd></div>
-        <div><dt>Situational awareness</dt><dd>Tracking the aircraft, weather, traffic, instruments, and the wider operational picture.</dd></div>
-        <div><dt>Workload management</dt><dd>Handling multiple cockpit tasks while holding priorities, accuracy, and safety.</dd></div>
-        <div><dt>Communication</dt><dd>Clear exchange with crew, ATC, instructors, and other aviation personnel.</dd></div>
-        <div><dt>Decision making</dt><dd>Assessing the situation, weighing options, and making structured, safety-focused calls.</dd></div>
-        <div><dt>Instrument flying</dt><dd>Flying on instruments and procedures when visual references are limited.</dd></div>
-        <div><dt>Aircraft handling</dt><dd>Precise control through takeoffs, landings, maneuvering, and changing conditions.</dd></div>
-        <div><dt>Adaptability</dt><dd>Staying calm and effective when weather, workload, or conditions shift.</dd></div>
-        <div><dt>Discipline &amp; attention to detail</dt><dd>Following procedures accurately while watching the details that matter.</dd></div>
-        <div><dt>Continuous learning</dt><dd>A standing willingness to learn, take feedback, and build new knowledge.</dd></div>
-      </dl>
-    </div>
-
-    <div class="av-close">
-      <p class="av-close-lead">My goal is not simply to reach the cockpit. It's to keep learning until I become the pilot I aspire to be.</p>
-      <p class="av-close-sub">Safety, discipline, continuous learning, and sound decision-making will always be at the foundation of that journey.</p>
-    </div>
+  <!-- ===== SKILLS (standalone, optional) ===== -->
+  <section id="skills">
+    <h2 id="skills-heading"></h2>
+    <p class="section-intro" id="skills-intro"></p>
+    <div id="skills-groups"></div>
   </section>
 
   <!-- ===== SELECTED WORK ===== -->
   <section id="work">
-    <h2>Selected work</h2>
-    <p class="section-intro">Across both ventures my role is Founder / Brand &amp; Creative Director. I identify the opportunity, define what the brand should become, and bring the right people and tools together to build it.</p>
+    <h2 id="work-heading"></h2>
+    <p class="section-intro" id="work-intro"></p>
 
     <div class="work-core">
-      <h3>Core Areas</h3>
-      <p class="core-list">
-        <span style="--i:0">Brand Direction</span>
-        <span style="--i:1">Creative Direction</span>
-        <span style="--i:2">Product Positioning</span>
-        <span style="--i:3">E-Commerce Strategy</span>
-        <span style="--i:4">Content &amp; Social</span>
-        <span style="--i:5">Campaign Development</span>
-        <span style="--i:6">Meta Ads</span>
-        <span style="--i:7">SEO &amp; Digital Growth</span>
-      </p>
+      <h3 id="work-core-title"></h3>
+      <p class="core-list" id="work-core-list"></p>
     </div>
 
-    <article class="work-item">
-      <div class="work-media">
-        <img src="images/himal-logo.png" alt="HIMAL Legacy logo">
-      </div>
-      <div class="work-body">
-        <span class="work-year">2026</span>
-        <h3>HIMAL Legacy</h3>
-        <p class="work-role">Founder / Brand &amp; Creative Director</p>
+    <div id="work-items"></div>
+  </section>
 
-        <div class="work-block">
-          <h4>The opportunity</h4>
-          <p>HIMAL Legacy was born from a simple belief: Nepal should not only be known for its mountains, but also for what it creates.</p>
-          <p>In a market shaped largely by imported brands, HIMAL Legacy is building a Nepalese lifestyle label focused on quality, design, and everyday wear. Inspired by the spirit, resilience, and character of the Himalaya, we create apparel and essentials made for modern life — from everyday streets to weekends outdoors.</p>
-          <p>Our ambition is bigger than building a local brand. We want to build a Nepalese name that earns trust at home and stands confidently on the global stage.</p>
-        </div>
-        <div class="work-block">
-          <h4>My role</h4>
-          <p>As Founder / Brand &amp; Creative Director, I shape the vision, identity, and creative direction of HIMAL Legacy. I turn ideas into concepts — defining what the brand stands for, how it looks, how it communicates, and how people experience it.</p>
-          <p>From product ideas and design direction to branding, storytelling, and customer experience, I focus on the bigger picture: building a Nepalese lifestyle brand with a distinct identity, meaningful purpose, and the ambition to compete beyond Nepal.</p>
-          <p>I may not write every line of code or make every product myself, but I define what should be created, why it matters, and where the brand is going.</p>
-        </div>
-        <div class="work-block">
-          <h4>The work</h4>
-          <p>Building HIMAL Legacy from an idea into a brand with a clear point of view.</p>
-          <p>I lead the brand's positioning, identity, and creative direction — defining how HIMAL Legacy looks, feels, speaks, and connects with people. I develop product concepts and turn technical features into stories that communicate real value without losing the character of the brand.</p>
-          <p>From campaign concepts and visual direction to digital presence, social media, advertising, and customer experience, I connect the creative and commercial sides of the business. I explore ideas, test what works, learn from the response, and continuously refine the brand.</p>
-          <p>The work is not simply about selling products. It is about creating a distinct Nepalese lifestyle brand with a strong identity, earning trust through what we create, and building something with the potential to grow beyond Nepal.</p>
-        </div>
-        <div class="work-block">
-          <h4>Outcome</h4>
-          <ul class="work-stats">
-            <li><span class="stat-num">500+</span><span class="stat-label">orders in week one</span></li>
-            <li><span class="stat-num">3</span><span class="stat-label">countries shipped to</span></li>
-            <li><span class="stat-num">2026</span><span class="stat-label">launched</span></li>
-          </ul>
-          <p>Launched in 2026 to more than 500 orders in the first week. Since then, HIMAL Legacy has shipped internationally to India, Australia and the United States alongside its customers in Nepal. The social audience started small and is growing steadily as the brand builds.</p>
-        </div>
+  <!-- ===== SERVICES (optional) ===== -->
+  <section id="services">
+    <h2 id="services-heading"></h2>
+    <p class="section-intro" id="services-intro"></p>
+    <div class="services-grid" id="services-items"></div>
+  </section>
 
-        <div class="work-caps">
-          <h4>Leadership Highlights</h4>
-          <ul>
-            <li>Brand Direction</li>
-            <li>Creative Direction</li>
-            <li>Product Positioning</li>
-            <li>Product Storytelling</li>
-            <li>E-Commerce Strategy</li>
-            <li>Campaign Development</li>
-            <li>Content &amp; Social</li>
-            <li>Meta Ads</li>
-            <li>SEO &amp; Digital Growth</li>
-            <li>Customer Experience</li>
-          </ul>
-        </div>
-        <a href="https://himallegacy.com" target="_blank" rel="noopener noreferrer" class="work-link">himallegacy.com</a>
-      </div>
-    </article>
-
-    <article class="work-item work-item--reverse">
-      <div class="work-media">
-        <img src="images/kitnation-logo.png" alt="KitNation Nepal logo">
-      </div>
-      <div class="work-body">
-        <span class="work-year">2026</span>
-        <h3>KitNation Nepal</h3>
-        <p class="work-role">Founder / Brand &amp; Creative Director</p>
-
-        <div class="work-block">
-          <h4>The opportunity</h4>
-          <p>KitNation Nepal is a football apparel venture focused on bringing premium football club jerseys and fanwear to customers in Nepal.</p>
-          <p>The venture curates and resells premium club jerseys across different levels of quality and experience — from fan versions designed for everyday wear to player-grade versions built closer to what professionals wear on the pitch.</p>
-          <p>I saw an opportunity to make premium football apparel more accessible while creating a shopping experience that feels trustworthy, modern, and professional. From product selection and positioning to visual presentation, content, and customer experience, the focus is on building a destination for people who genuinely value football culture and quality apparel.</p>
-          <p>The ambition is to build KitNation into a recognizable football lifestyle destination in Nepal, with a strong identity and the potential to grow beyond the local market.</p>
-        </div>
-        <div class="work-block">
-          <h4>My role</h4>
-          <p>As Founder / Brand &amp; Creative Director, I shape the vision, brand identity, and overall direction of KitNation Nepal. I focus on identifying product opportunities, understanding what football fans value, and positioning the venture in a way that feels distinctive and credible.</p>
-          <p>From selecting the right products and defining how they are presented to developing the brand's visual language, content, and customer experience, I focus on turning the idea into a brand people recognize and trust.</p>
-          <p>My role is to see what the brand can become before it exists — then shape the vision, define the direction, and turn that possibility into something real.</p>
-        </div>
-        <div class="work-block">
-          <h4>Where it stands</h4>
-          <p>Established in 2026 and active. KitNation doesn't have a standalone site yet — its storefront currently sits under himallegacy.com. It has already shipped to customers in the United States and Australia alongside Nepal, and remains in its early growth stage.</p>
-        </div>
-
-        <div class="work-caps">
-          <h4>Leadership Highlights</h4>
-          <ul>
-            <li>Brand Direction</li>
-            <li>Creative Direction</li>
-            <li>Product Positioning</li>
-            <li>Product Storytelling</li>
-            <li>E-Commerce Strategy</li>
-            <li>Campaign Development</li>
-            <li>Content &amp; Social</li>
-            <li>Meta Ads</li>
-            <li>SEO &amp; Digital Growth</li>
-            <li>Customer Experience</li>
-          </ul>
-        </div>
-        <a href="https://himallegacy.com" target="_blank" rel="noopener noreferrer" class="work-link">himallegacy.com</a>
-      </div>
-    </article>
+  <!-- ===== TESTIMONIALS (optional) ===== -->
+  <section id="testimonials">
+    <h2 id="testimonials-heading"></h2>
+    <p class="section-intro" id="testimonials-intro"></p>
+    <div class="testimonial-grid" id="testimonials-items"></div>
   </section>
 
   <!-- ===== CONTACT ===== -->
   <section id="contact">
-    <h2>Let's connect</h2>
-    <p class="section-intro">Open to conversations about aviation, brands, and building from Nepal.</p>
-    <a href="mailto:officialkunalshah@gmail.com" class="contact-email">officialkunalshah@gmail.com</a>
-    <div class="social-links">
-      <a href="https://www.linkedin.com/in/kunal-shah-589bb4346" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-    </div>
+    <h2 id="contact-heading"></h2>
+    <p class="section-intro" id="contact-intro"></p>
+    <a href="#" id="contact-email" class="contact-email"></a>
+    <div class="social-links" id="contact-social"></div>
   </section>
 
   <!-- ===== FOOTER ===== -->
   <footer>
-    <p class="footer-mark">I fly. I build. I create.</p>
+    <p class="footer-mark" id="footer-tagline"></p>
     <div class="footer-meta">
-      <a href="mailto:officialkunalshah@gmail.com">officialkunalshah@gmail.com</a>
-      <span class="footer-time" id="footer-time" aria-label="Local time in Kathmandu">Kathmandu</span>
+      <a href="#" id="footer-email"></a>
+      <span class="footer-time" id="footer-time" aria-label="Local time"></span>
       <a href="#hero" class="footer-top" data-scroll-top>Back to top</a>
     </div>
-    <p class="footer-legal">&copy; 2026 Kunal Shah. All rights reserved.</p>
+    <p class="footer-legal" id="footer-legal"></p>
   </footer>
 
+  <script src="content.js"></script>
+  <script src="render.js"></script>
   <script src="lenis.min.js"></script>
   <script src="script.js"></script>
 </body>

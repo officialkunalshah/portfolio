@@ -18,6 +18,28 @@ if (!prefersReducedMotion && window.Lenis) {
   requestAnimationFrame(raf);
 }
 
+// Landing directly on a URL with a #hash (e.g. a nav link from another
+// page, like "index.html#about"): the browser tries to jump there before
+// Lenis has measured the page, so it resets scroll to the top. Wait until
+// everything (including images) has loaded and dimensions are settled,
+// then re-apply the jump.
+if (location.hash && location.hash.length > 1) {
+  const jumpToHash = () => {
+    const hashTarget = document.querySelector(location.hash);
+    if (!hashTarget) return;
+    if (lenis) {
+      lenis.scrollTo(hashTarget, { offset: -78, immediate: true });
+    } else {
+      hashTarget.scrollIntoView({ behavior: 'auto' });
+    }
+  };
+  if (document.readyState === 'complete') {
+    requestAnimationFrame(jumpToHash);
+  } else {
+    window.addEventListener('load', () => requestAnimationFrame(jumpToHash));
+  }
+}
+
 // In-page anchors: eased scroll via Lenis when active, native otherwise.
 document.querySelectorAll('a[href^="#"]').forEach((link) => {
   link.addEventListener('click', (e) => {
@@ -54,7 +76,10 @@ if (navbar) {
 // ============================
 // 2. SCROLL-TRIGGERED REVEAL
 // ============================
-const revealTargets = document.querySelectorAll('#about, #aviation, #work .work-item, #contact');
+// Any top-level section other than the hero (which has its own load-in
+// sequence), plus each individual work item for a staggered feel. This
+// automatically adapts to whichever sections a given site has enabled.
+const revealTargets = document.querySelectorAll('body > section:not(#hero):not(#work), .work-item');
 
 if (window.IntersectionObserver && revealTargets.length) {
   // threshold 0 + a small bottom margin: fires as a section's top edge enters,
@@ -201,7 +226,9 @@ const navMap = new Map();
 document.querySelectorAll('.nav-links a[href^="#"]').forEach((a) => {
   navMap.set(a.getAttribute('href').slice(1), a);
 });
-const spySections = ['about', 'aviation', 'work', 'contact']
+// Whichever sections actually have a nav link (this adapts automatically
+// to whatever sections a given site has enabled).
+const spySections = Array.from(navMap.keys())
   .map((id) => document.getElementById(id))
   .filter(Boolean);
 
@@ -218,20 +245,22 @@ if (window.IntersectionObserver && spySections.length) {
 }
 
 // ============================
-// 4e. KATHMANDU LOCAL TIME (footer)
+// 4e. LOCAL TIME (footer) — timezone/label come from content.js
 // ============================
 const footerTime = document.getElementById('footer-time');
-if (footerTime) {
+const localTimeConfig = window.SITE_CONTENT && window.SITE_CONTENT.footer && window.SITE_CONTENT.footer.localTime;
+
+if (footerTime && localTimeConfig && localTimeConfig.enabled) {
   const tick = () => {
     try {
       const t = new Date().toLocaleTimeString('en-GB', {
-        timeZone: 'Asia/Kathmandu',
+        timeZone: localTimeConfig.timezone,
         hour: '2-digit',
         minute: '2-digit',
       });
-      footerTime.textContent = 'Kathmandu ' + t;
+      footerTime.textContent = localTimeConfig.label + ' ' + t;
     } catch (e) {
-      footerTime.textContent = 'Kathmandu, Nepal';
+      footerTime.textContent = localTimeConfig.label;
     }
   };
   tick();
