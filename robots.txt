@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://shahkunal.com.np/sitemap.xml
