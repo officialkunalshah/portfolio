@@ -1,0 +1,28 @@
+# build output
+dist/
+
+# dependencies
+node_modules/
+
+# logs
+npm-debug.log*
+
+# environment variables
+.env
+.env.production
+
+# macOS-specific files
+.DS_Store
+
+# jetbrains setting folder
+.idea/
+
+# Astro
+.astro/
+
+# local-only
+_backup/
+.claude/skills/
+.claude/plugins/
+.claude/settings.local.json
+

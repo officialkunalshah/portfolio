@@ -1,0 +1,15 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.tsx';
+import AviationFull from '../components/AviationFull.tsx';
+import Footer from '../components/Footer.tsx';
+---
+
+<Layout
+  title="Aviation — Kunal Shah"
+  description="Flight training, qualifications, aircraft experience, and core skills of Kunal Shah — Nepali commercial pilot trained at Royhle Aviation Academy."
+>
+  <Nav client:load />
+  <AviationFull client:load />
+  <Footer client:visible />
+</Layout>

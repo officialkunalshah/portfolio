@@ -1,0 +1,25 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.tsx';
+import Hero from '../components/Hero.tsx';
+import About from '../components/About.tsx';
+import AviationPreview from '../components/AviationPreview.tsx';
+import Work from '../components/Work.tsx';
+import Contact from '../components/Contact.tsx';
+import Footer from '../components/Footer.tsx';
+---
+
+<Layout
+  title="Kunal Shah — Pilot, Founder & Creative Director"
+  description="Nepali commercial pilot (CPL, IR, MER, Frozen ATPL) and Founder / Brand & Creative Director of HIMAL Legacy and KitNation Nepal."
+>
+  <Nav client:load />
+  <main id="top">
+    <Hero client:load />
+    <About client:visible />
+    <AviationPreview client:visible />
+    <Work client:visible />
+    <Contact client:visible />
+  </main>
+  <Footer client:visible />
+</Layout>

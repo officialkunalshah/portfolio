@@ -1,0 +1,221 @@
+/* Design System: Kunal Shah Portfolio */
+/* Pattern: Scroll-Triggered Storytelling | Style: Liquid Glass */
+
+:root {
+  /* Colors - Premium Black + Gold (dark is the default, regardless of system preference) */
+  --color-primary: #1c1917;
+  --color-on-primary: #ffffff;
+  --color-secondary: #44403c;
+  --color-on-secondary: #ffffff;
+  --color-accent: #a16207;
+  --color-on-accent: #ffffff;
+  --color-background: #0c0a09;
+  --color-foreground: #fafaf9;
+  --color-card: #1c1917;
+  --color-card-foreground: #fafaf9;
+  --color-muted: #44403c;
+  --color-muted-foreground: #a8a29e;
+  --color-border: #44403c;
+  --color-destructive: #dc2626;
+  --color-on-destructive: #ffffff;
+  --color-ring: #fafaf9;
+
+  /* Light Mode (used only when the visitor explicitly picks it via the toggle) */
+  --color-background-light: #ebe3d5;
+  --color-foreground-light: #201c16;
+  --color-card-light: #f4efe4;
+  --color-card-foreground-light: #201c16;
+  --color-muted-light: #e0d6c2;
+  --color-muted-foreground-light: #5c5346;
+  --color-border-light: #d2c5ac;
+
+  /* Typography */
+  --font-display: "Fraunces", serif;
+  --font-body: "Hanken Grotesk", sans-serif;
+
+  /* Type Scale */
+  --step--2: clamp(0.78rem, 0.73vw, 0.89rem);
+  --step--1: clamp(0.94rem, 0.85vw, 1.09rem);
+  --step-0: clamp(1.13rem, 1vw, 1.33rem);
+  --step-1: clamp(1.35rem, 1.18vw, 1.63rem);
+  --step-2: clamp(1.62rem, 1.39vw, 2rem);
+  --step-3: clamp(1.94rem, 1.64vw, 2.44rem);
+  --step-4: clamp(2.33rem, 1.94vw, 2.98rem);
+  --step-5: clamp(2.8rem, 2.29vw, 3.65rem);
+  --step-6: clamp(3.36rem, 2.71vw, 4.47rem);
+  --step-hero: clamp(4rem, 6vw, 6rem);
+
+  /* Spacing */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+
+  /* Timing */
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
+  --ease-out: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Dark is the default above, unconditionally — the site does not follow
+   system/OS light-dark preference. Light only applies when the visitor
+   explicitly picks it via the theme toggle (persisted in localStorage). */
+:root[data-theme="light"] {
+  --color-background: var(--color-background-light);
+  --color-foreground: var(--color-foreground-light);
+  --color-card: var(--color-card-light);
+  --color-card-foreground: var(--color-card-foreground-light);
+  --color-muted: var(--color-muted-light);
+  --color-muted-foreground: var(--color-muted-foreground-light);
+  --color-border: var(--color-border-light);
+}
+
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.6;
+  color: var(--color-foreground);
+  background-color: var(--color-background);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+h1 { font-size: var(--step-hero); }
+h2 { font-size: var(--step-5); }
+h3 { font-size: var(--step-4); }
+h4 { font-size: var(--step-3); }
+h5 { font-size: var(--step-2); }
+h6 { font-size: var(--step-1); }
+
+p {
+  text-wrap: pretty;
+  margin-bottom: var(--space-md);
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+  transition: opacity var(--duration-fast) var(--ease-in-out);
+}
+
+a:hover {
+  opacity: 0.8;
+}
+
+a:focus {
+  outline: 2px solid var(--color-ring);
+  outline-offset: 2px;
+}
+
+button {
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition: all var(--duration-normal) var(--ease-in-out);
+  border: none;
+  padding: var(--space-md) var(--space-lg);
+  border-radius: 0.375rem;
+  font-weight: 600;
+}
+
+button:focus {
+  outline: 2px solid var(--color-ring);
+  outline-offset: 2px;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Utility Classes */
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 var(--space-lg);
+}
+
+.section {
+  padding: var(--space-3xl) var(--space-lg);
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: var(--space-2xl) var(--space-lg);
+  }
+}
+
+/* Link Styles */
+.link-button {
+  display: inline-block;
+  padding: var(--space-md) var(--space-xl);
+  background-color: var(--color-accent);
+  color: var(--color-on-accent);
+  border-radius: 0.375rem;
+  font-weight: 600;
+  transition: all var(--duration-normal) var(--ease-in-out);
+}
+
+.link-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(161, 98, 7, 0.3);
+}
+
+/* Selection */
+::selection {
+  background-color: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-accent);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-secondary);
+}
