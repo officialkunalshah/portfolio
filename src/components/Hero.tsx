@@ -9,6 +9,11 @@ export default function Hero() {
     if (!video) return;
 
     const playVideo = () => {
+      // Setting muted only via the JSX attribute isn't reliable across all
+      // mobile browsers — enforce it on the element directly before every
+      // play() call so autoplay never comes through with sound.
+      video.muted = true;
+      video.defaultMuted = true;
       video.play().catch(() => {
         // Autoplay blocked, will retry on interaction
       });
@@ -52,6 +57,12 @@ export default function Hero() {
         playsInline
         preload="auto"
         poster="/images/hero-studio.jpg"
+        // React/browsers disagree on the `muted` DOM property after SSR
+        // (a long-standing React issue, not a real bug in our markup) —
+        // the useEffect above enforces it imperatively regardless, so the
+        // mismatch warning is safe to suppress rather than let React
+        // discard and rebuild this element after hydration.
+        suppressHydrationWarning
         style={{
           position: 'absolute',
           top: 0,

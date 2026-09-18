@@ -249,6 +249,10 @@ export default function Nav() {
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3, ease: 'easeInOut' }}
             style={{
+              position: 'absolute',
+              top: '100%',
+              left: 0,
+              right: 0,
               overflow: 'hidden',
               backgroundColor: 'var(--color-background)',
               borderTop: '1px solid var(--color-border)',
