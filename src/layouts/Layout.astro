@@ -27,6 +27,9 @@ const canonicalURL = new URL(Astro.url.pathname, siteOrigin);
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
+    {Astro.url.pathname === '/' && (
+      <link rel="preload" as="video" href="/images/hero-video.mp4" type="video/mp4" />
+    )}
 
     <!-- Primary Meta Tags -->
     <title>{title}</title>
